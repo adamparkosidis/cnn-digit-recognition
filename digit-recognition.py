@@ -3,6 +3,9 @@ import torchvision
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
 
 
 # we now select the device based on what is available
@@ -72,5 +75,110 @@ for i in range(40):
   plt.tight_layout()
   plt.imshow(example_data[i][0], cmap='gray', interpolation='none')
   plt.title("Ground Truth: {}".format(example_targets[i]))
+  plt.xticks([])
+  plt.yticks([])
+
+
+class Net(nn.Module):
+  def __init__(self):
+    super(Net, self).__init__()
+    self.conv1 = nn.Conv2d(1, 10, kernel_size=5)
+    self.conv2 = nn.Conv2d(10, 20, kernel_size=5, padding='same')
+    self.linear1 = nn.Linear(720,50)
+    self.linear2 = nn.Linear(50,10)
+
+  def forward(self, x):
+    x1 = F.relu(F.max_pool2d(self.conv1(x), 2))
+    x2 = F.relu(F.max_pool2d(self.conv2(x1), 2))
+
+    batch_size = x.shape[0]
+    x2 = x2.view(batch_size,-1)
+
+    y1 = torch.nn.functional.relu(self.linear1(x2))
+    y = self.linear2(y1)
+    return y
+
+# Now we define the optimizer, and instantiate the network.
+
+learning_rate = 0.01
+
+network = Net().to(DEVICE)  # We move the network to the GPU
+optimizer = optim.Adam(network.parameters(), lr=learning_rate)
+
+
+n_epochs = 3  # 3 epochs by default
+
+train_losses = []
+train_counter = []
+test_losses = []
+test_counter = [i*len(train_loader.dataset) for i in range(n_epochs + 1)]
+
+# This is the main training loop
+
+log_interval = 10
+
+def train(epoch):
+  network.train()
+  for batch_idx, (data, target) in enumerate(train_loader):
+    optimizer.zero_grad()
+    data = data.to(DEVICE)
+    target = target.to(DEVICE)
+    output = network(data)
+    loss = F.cross_entropy(output, target)
+    loss.backward()
+    optimizer.step()
+    if batch_idx % log_interval == 0:
+      print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
+            epoch, batch_idx * len(data), len(train_loader.dataset),
+            100. * batch_idx / len(train_loader), loss.item()))
+      train_losses.append(loss.item())
+      train_counter.append(
+        (batch_idx*64) + ((epoch-1)*len(train_loader.dataset)))
+
+# This is the main testing loop
+
+def test():
+  network.eval()
+  test_loss = 0
+  correct = 0
+  with torch.no_grad():
+    for data, target in test_loader:
+      data = data.to(DEVICE)
+      target = target.to(DEVICE)
+      output = network(data)
+      test_loss += F.cross_entropy(output, target, size_average=False).item()
+      pred = output.data.max(1, keepdim=True)[1]
+      correct += pred.eq(target.data.view_as(pred)).sum()
+  test_loss /= len(test_loader.dataset)
+  test_losses.append(test_loss)
+  print('\nTest set: Avg. loss: {:.4f}, Accuracy: {}/{} ({:.0f}%)\n'.format(
+        test_loss, correct, len(test_loader.dataset),
+        100. * correct / len(test_loader.dataset)))
+
+# Let's train our model
+
+test()
+for epoch in range(1, n_epochs + 1):
+    train(epoch)
+    test()
+
+fig = plt.figure()
+plt.plot(train_counter, train_losses, color='blue')
+plt.scatter(test_counter, test_losses, color='red')
+plt.legend(['Train Loss', 'Test Loss'], loc='upper right')
+plt.xlabel('number of training examples seen')
+plt.ylabel('negative log likelihood loss')
+
+
+with torch.no_grad():
+    output = network(example_data.to(DEVICE))
+
+fig = plt.figure(figsize=(20, 10))
+for i in range(40):
+  plt.subplot(5,8,i+1)
+  plt.tight_layout()
+  plt.imshow(example_data[i][0], cmap='gray', interpolation='none')
+  plt.title("Prediction: {}".format(
+      output.data.max(1, keepdim=True)[1][i].item()))
   plt.xticks([])
   plt.yticks([])

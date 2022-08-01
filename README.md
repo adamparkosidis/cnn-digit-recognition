@@ -15,6 +15,8 @@ One advantage of using pytorch as a framework is that it allows us to execute ou
 
 Below you can see a diagram for a convolutional network. THe diagram is translated into a PyTorch model by filling in the `Net` class below.
 
+![CNN Diagram](/home/adam/CNN-digit-recognition/CNN.png?raw=true "Title")
+
 After each max pooling step and after the first dense (linear) layer apply the relu activation function.
 We use the modules `nn.Conv2d`, `nn.Linear` and the functions `F.max_pool2d` and `F.relu`.
 
