@@ -12,7 +12,7 @@
 One advantage of using pytorch as a framework is that it allows us to execute our code on the GPU. This can often greatly reduce the runtime needed to train neural networks. Below is a short description of how to do this.
 
 
-### CNN
+## CNN
 
 Below you can see a diagram for a convolutional network. THe diagram is translated into a PyTorch model by filling in the `Net` class below.
 
