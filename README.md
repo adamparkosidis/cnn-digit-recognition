@@ -14,7 +14,7 @@ One advantage of using pytorch as a framework is that it allows us to execute ou
 
 ## CNN
 
-Below you can see a diagram for a convolutional network. THe diagram is translated into a PyTorch model by filling in the `Net` class below.
+Below you can see a diagram for a convolutional network. The diagram is translated into a PyTorch model by filling in the `Net` class below.
 
 ![CNN Diagram](CNN.png)
 
