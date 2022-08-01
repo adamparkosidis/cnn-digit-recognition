@@ -11,6 +11,13 @@
 
 One advantage of using pytorch as a framework is that it allows us to execute our code on the GPU. This can often greatly reduce the runtime needed to train neural networks. Below is a short description of how to do this.
 
+```
+if torch.cuda.is_available():                     # if a GPU is available for pytorch
+  DEVICE = torch.device('cuda')
+else:
+  DEVICE = torch.device('cpu')
+```
+
 
 ## CNN
 
