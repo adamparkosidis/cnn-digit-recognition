@@ -4,6 +4,11 @@
 
 [Description of the dataset we will be working with](https://en.wikipedia.org/wiki/MNIST_database)
 
+An example of the test data
+
+![Test data random sample](![image](https://user-images.githubusercontent.com/84510854/182141721-76db5b46-5f97-4a5d-9695-60e9772dfa1d.png)
+)
+
 
 ##
 
