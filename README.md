@@ -1,6 +1,9 @@
-# A convolutional network in PyTorch to recognize handwritten digits as given in the MNIST dataset
+# A convolutional network in [https://pytorch.org/tutorials/beginner/pytorch_with_examples.html](PyTorch) to recognize handwritten digits as given in the MNIST dataset
 
 [Description of the dataset we will be working with](https://en.wikipedia.org/wiki/MNIST_database)
+
+
+##
 
 ## Using GPU
 
