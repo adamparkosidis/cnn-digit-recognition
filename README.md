@@ -1,37 +1,18 @@
 # A convolutional network in PyTorch to recognize handwritten digits as given in the MNIST dataset
-<<<<<<< HEAD
-=======
 
-[PyTorch Documentation](https://pytorch.org/tutorials/beginner/pytorch_with_examples.html)
->>>>>>> a7a29238cb6078679173bafb3cfd3867369121b2
 
 [PyTorch Documentation](https://pytorch.org/tutorials/beginner/pytorch_with_examples.html)
 [Description of the dataset we will be working with](https://en.wikipedia.org/wiki/MNIST_database)
 
 An example of the test data
 
-![Test data random sample](test-data-sample.png)
+![Test data random sample](/images/test-data-sample.png)
 
-
-##
 
 ## Using GPU
 
 One advantage of using pytorch as a framework is that it allows us to execute our code on the GPU. This can often greatly reduce the runtime needed to train neural networks. Below is a short description of how to do this.
 
-<<<<<<< HEAD
-
-### CNN
-
-Below you can see a diagram for a convolutional network. THe diagram is translated into a PyTorch model by filling in the `Net` class below.
-
-![CNN Diagram](/home/adam/CNN-digit-recognition/CNN.png?raw=true "Title")
-
-After each max pooling step and after the first dense (linear) layer apply the relu activation function.
-We use the modules `nn.Conv2d`, `nn.Linear` and the functions `F.max_pool2d` and `F.relu`.
-
-*Hint: Carefully inspect the shapes of the intermediate layers and add padding to the convolutions where necessary.*
-=======
 ```
 if torch.cuda.is_available():                     # if a GPU is available for pytorch
   DEVICE = torch.device('cuda')
@@ -44,7 +25,7 @@ else:
 
 Below you can see a diagram for a convolutional network. 
 
-![CNN Diagram](CNN.png)
+![CNN Diagram](/images/CNN.png)
 
 The diagram is translated into a PyTorch model by filling in the `Net` class below.
 
@@ -72,4 +53,3 @@ class Net(nn.Module):
 After each max pooling step and after the first dense (linear) layer apply the relu activation function.
 We use the modules `nn.Conv2d`, `nn.Linear` and the functions `F.max_pool2d` and `F.relu`. We also carefully inspect the shapes of
 the intermediate layers and add padding to the convolutions where necessary.
->>>>>>> a7a29238cb6078679173bafb3cfd3867369121b2
