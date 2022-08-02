@@ -101,7 +101,7 @@ class Net(nn.Module):
     y = self.linear2(y1)
     return y
 
-# Now we define the optimizer, and instantiate the network.
+# Now we define the optimizer, and initiate the network.
 
 learning_rate = 0.01
 
@@ -165,9 +165,7 @@ for epoch in range(1, n_epochs + 1):
     test()
 
 # The model has an accuracy around 98%!
-##########################################################################################################   
-
-
+  
 # We can visualize how the loss function is minimizing 
     
 fig = plt.figure()
@@ -191,9 +189,10 @@ for i in range(40):
       output.data.max(1, keepdim=True)[1][i].item()))
   plt.xticks([])
   plt.yticks([])
-
   
-#### BONUS ###
+########################################################################################################## 
+  
+#### BONUS ###  
 
 # As bonus we will compare our model with a one-layer perceptron (i.e. no hidden layers). We will write a new `class SimplePerceptron` that flattens
 # the 28 x 28 images passes them through one fully connected linear layer with input size 28 times 28 and outputs a 10 dimensional one-hot vector. 
