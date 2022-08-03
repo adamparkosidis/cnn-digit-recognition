@@ -325,6 +325,6 @@ for epoch in range(1, n_epochs + 1):
 # aforementioned process (convolution+max-pooling) the model is able to repeat the feature categorization but for more complex features. At the end of
 # the repeating convolutions and maxi-pooling operations the data is delivered in a form that the model is able to be trained in specific features 
 # (e.g. circles, lines etc) and in to correlations between them. In other words, the CNN is able to predict the numbers even if we disrupt the global 
-# structure of the data (rotation), because the network is categorizing different features of the data and the model trained in these and the correlations
+# structure of the data (rotation), because the network is categorizing different features of the data and the model is being trained in these and the correlations
 # between them. On the other hand, a simple linear layer model is very dependent on the global structure of the image, because the model is not trained
 # on many different specific features and thus it performs poorly after rotating the data (disrupting the global info structure)
