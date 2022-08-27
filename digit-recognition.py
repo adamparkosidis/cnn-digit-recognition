@@ -45,29 +45,31 @@ test_loader = torch.utils.data.DataLoader(
                   (0.1307,), (0.3081,)),
           ])),
     batch_size=batch_size_test, shuffle=True)
-
-# The transform statement is used to transform the data. More specifically, we see that transforms the data in to tensor type
-# ```torchvision.transforms.ToTensor()``` and also normilizes the data ```torchvision.transforms.Normalize((0.1307,), (0.3081,))```,
-# where the parameters are the mean and standard deviation of the MNIST dataset. To tackle the model learning difficulty, we
-# normalize training data. We ensure that the value ranges of the various features are comparable (feature scaling) so that gradient
-# descents can converge faster. Finally, ```shuffle=True```, because it aids in the training's rapid convergence, it eliminates any
-# prejudice during training and inhibits the model from learning the training order.
+'''
+The transform statement is used to transform the data. More specifically, we see that transforms the data in to tensor type
+```torchvision.transforms.ToTensor()``` and also normilizes the data ```torchvision.transforms.Normalize((0.1307,), (0.3081,))```,
+where the parameters are the mean and standard deviation of the MNIST dataset. To tackle the model learning difficulty, we
+normalize training data. We ensure that the value ranges of the various features are comparable (feature scaling) so that gradient
+descents can converge faster. Finally, ```shuffle=True```, because it aids in the training's rapid convergence, it eliminates any
+prejudice during training and inhibits the model from learning the training order.
+'''
 
 examples = list(test_loader)
 example_data, example_targets = examples[0]
 print(example_data.shape)
 print(example_targets.shape)
 
-# The `example_data` contains 1000 object ```len(example_data)```=1000, where each element is an image of hand-written digits between
-# 0 and 9. Each of these objects contains 28 arrays ```len(example_data[0][0])=28``` and each of the 28 arrays contains 28 elements
-#```len(example_data[0][0][0])=28```. These are the 28x28 pixels of each image (28 rows x 28 columns). Each of these
-# 784 elements contains a value between [-0.4242, 2.8215] which indicates the color of the pixel, where -0.4242 corresponds to total
-# black while 2.8215 to total white. The printed shape of the ```example_data``` is ```torch.Size([1000, 1, 28, 28])```, where number 1 just
-# states that the array has 1000 rows and 1 column. This is because ```example_data``` is a tensor and we need it in this form to able to
-# perform tensor multiplications. The ```example_targets``` tensor contains 1000 elements, where each elements represent the actual digit
-# that corresponts to each image of the ```example_data```. For example, ```example_targets[0] = 3``` which means that ```example_data[0]``` containts
-# an image of the hand-written number 3.
-
+'''
+The `example_data` contains 1000 object ```len(example_data)```=1000, where each element is an image of hand-written digits between
+0 and 9. Each of these objects contains 28 arrays ```len(example_data[0][0])=28``` and each of the 28 arrays contains 28 elements
+```len(example_data[0][0][0])=28```. These are the 28x28 pixels of each image (28 rows x 28 columns). Each of these
+784 elements contains a value between [-0.4242, 2.8215] which indicates the color of the pixel, where -0.4242 corresponds to total
+black while 2.8215 to total white. The printed shape of the ```example_data``` is ```torch.Size([1000, 1, 28, 28])```, where number 1 just
+states that the array has 1000 rows and 1 column. This is because ```example_data``` is a tensor and we need it in this form to able to
+perform tensor multiplications. The ```example_targets``` tensor contains 1000 elements, where each elements represent the actual digit
+that corresponts to each image of the ```example_data```. For example, ```example_targets[0] = 3``` which means that ```example_data[0]``` containts
+an image of the hand-written number 3.
+'''
 
 # Let's visualize some of our test data.
 
@@ -231,9 +233,12 @@ for epoch in range(1, n_epochs + 1):
     train(epoch)
     test()
     
-# The classification accuracy in this case is around 89%. It maybe be surprising that such a simple model can actually provide us with 
-# such an accuracy based on the fact that it consists only by a linear transformation. The accuracy of the CNN is approximatelly 10% higher. 
-# This is of course a big improvement.
+'''
+Analysis:
+The classification accuracy in this case is around 89%. It maybe be surprising that such a simple model can actually provide us with 
+such an accuracy based on the fact that it consists only by a linear transformation. The accuracy of the CNN is approximatelly 10% higher. 
+This is of course a big improvement.
+''' 
 
 # Let's make the fitting a bit more challenging. We now rotate every image by [0,180] degrees randomly.
 
@@ -317,14 +322,16 @@ test()
 for epoch in range(1, n_epochs + 1):
     train(epoch)
     test()
-    
-# We can clearly see that the CNN performs pretty well and most importantly much better than the simple model. The reason behind that is that the CNN is
-# able to bring the data in a well feature-organized form making it much easier for the model to train on specific features. More specifically, with every
-# convolution the data is categorized in a number of channels where each channel preserves specific features of the initial image, then the max-pooling 
-# operation compresses the data so that the model can learn faster, while preserves the info structure of the initial image. By repeating the 
-# aforementioned process (convolution+max-pooling) the model is able to repeat the feature categorization but for more complex features. At the end of
-# the repeating convolutions and maxi-pooling operations the data is delivered in a form that the model is able to be trained in specific features 
-# (e.g. circles, lines etc) and in to correlations between them. In other words, the CNN is able to predict the numbers even if we disrupt the global 
-# structure of the data (rotation), because the network is categorizing different features of the data and the model is being trained in these and the correlations
-# between them. On the other hand, a simple linear layer model is very dependent on the global structure of the image, because the model is not trained
-# on many different specific features and thus it performs poorly after rotating the data (disrupting the global info structure)
+'''   
+Analysis:
+We can clearly see that the CNN performs pretty well and most importantly much better than the simple model. The reason behind that is that the CNN is
+able to bring the data in a well feature-organized form making it much easier for the model to train on specific features. More specifically, with every
+convolution the data is categorized in a number of channels where each channel preserves specific features of the initial image, then the max-pooling 
+operation compresses the data so that the model can learn faster, while preserves the info structure of the initial image. By repeating the 
+aforementioned process (convolution+max-pooling) the model is able to repeat the feature categorization but for more complex features. At the end of
+the repeating convolutions and maxi-pooling operations the data is delivered in a form that the model is able to be trained in specific features 
+(e.g. circles, lines etc) and in to correlations between them. In other words, the CNN is able to predict the numbers even if we disrupt the global 
+structure of the data (rotation), because the network is categorizing different features of the data and the model is being trained in these and the correlations
+between them. On the other hand, a simple linear layer model is very dependent on the global structure of the image, because the model is not trained
+on many different specific features and thus it performs poorly after rotating the data (disrupting the global info structure)
+'''
