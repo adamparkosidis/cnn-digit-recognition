@@ -108,7 +108,8 @@ class Net(nn.Module):
 learning_rate = 0.01
 
 network = Net().to(DEVICE)  # We move the network to the GPU
-optimizer = optim.Adam(network.parameters(), lr=learning_rate)  # Here we are using the so called [Adam](https://arxiv.org/abs/1412.6980) optimizer. 
+optimizer = optim.Adam(network.parameters(), lr=learning_rate)  # Here we are using the so called [Adam](https://arxiv.org/abs/1412.6980) optimizer,
+                                                                # which is a very efficient adaptive gradient descent optimizer (adapts the learning rate)
 
 n_epochs = 3  # 3 epochs by default
 
